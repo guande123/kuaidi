@@ -11,11 +11,25 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context="com.example.administrator.ad20170221downorderonline.activity.MainActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <EditText
+        android:id="@+id/kuaidihao"
+        android:layout_width="0dp"
+        android:layout_weight="2"
         android:layout_height="wrap_content"
-        android:text="选择快递公司"/>
+        android:hint="输入快递单号"
+        android:textSize="12sp"/>
+    <Button
+        android:id="@+id/search_click"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="点击查询"
+        android:textSize="12sp"/>
+</LinearLayout>
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="50dp"

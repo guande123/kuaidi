@@ -14,10 +14,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.administrator.ad20170221downorderonline.R;
+import com.example.administrator.ad20170221downorderonline.entity.ChangyongComList;
 import com.example.administrator.ad20170221downorderonline.entity.CompanyList;
+import com.example.administrator.ad20170221downorderonline.entity.KDHInfo;
 import com.example.administrator.ad20170221downorderonline.entity.OrderNetEntity;
 import com.example.administrator.ad20170221downorderonline.entity.ReceiverInfo;
 import com.example.administrator.ad20170221downorderonline.entity.SenderInfo;
+import com.example.administrator.ad20170221downorderonline.orderOnlineAPI.ChangyongkuaidiAPi;
 import com.example.administrator.ad20170221downorderonline.orderOnlineAPI.OrderOnlineAPI;
 import com.example.administrator.ad20170221downorderonline.orderOnlineAPI.OrderString;
 import com.google.gson.Gson;
@@ -51,13 +54,17 @@ public class MainActivity extends AppCompatActivity {
     private EditText mRAddEdt;
     private EditText mRPostEdt;
     private Button mSubmitBtn;
+    private Button mSearchOrder;
+    private EditText mKuaidihao;
      private ArrayAdapter<String> mArrayAdapter;
     private ArrayList<String> mStrings = new ArrayList<String>();
     private HttpURLConnection conn;
     private CompanyList mCompanyList;
+    private ChangyongComList  mchangyongcom;
     private Handler mHandler;
     public static final int LOAD_LIST =1002 ;
     public static final int FAIL_ORDER = 1003;
+    public static final int  FAIL_SEARCH =1004 ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +94,56 @@ public class MainActivity extends AppCompatActivity {
         mRPostEdt= (EditText) findViewById(R.id.receiver_post_code);
         mSubmitBtn = (Button) findViewById(R.id.submit);
         mSpinner = (Spinner) findViewById(R.id.spinner);
+
+        mSearchOrder = (Button) findViewById(R.id.search_click);
+        mKuaidihao = (EditText) findViewById(R.id.kuaidihao);
+        mSearchOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              String kuaidihao =   mKuaidihao.getText().toString().trim();
+              int position =  mSpinner.getSelectedItemPosition();
+                Log.i("AAAA","position"+position);
+                final String urlstr = ChangyongkuaidiAPi.KUAIDI_SEARCH_URL+"?key="+ChangyongkuaidiAPi.APPKEY+
+                        "&no="+kuaidihao+"&com="+mchangyongcom.getResult().get(position).getNo();
+                new Thread(new Runnable() {
+
+
+                    @Override
+                    public void run() {
+                        URL url = null;
+                        try {
+                            url = new URL(urlstr);
+                        Log.i("AAAA", urlstr);
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        InputStream is = conn.getInputStream();
+                        StringBuffer sb = new StringBuffer();
+                        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                        String line = null;
+                        while ((line = br.readLine()) != null) {
+                            sb.append(line);
+                        }
+                        br.close();
+                        is.close();
+                        Gson g = new Gson();
+                            Log.i("AAAA",g.toString());
+                        KDHInfo kdhInfo =  g.fromJson(sb.toString(), KDHInfo.class);
+                            if(kdhInfo.getReason().equals("查询物流信息成功")){
+                                   //返回物流信息
+                            }else{
+                                Message msg= new Message();
+                                msg.what = FAIL_SEARCH;
+                                mHandler.sendMessage(msg);
+                            }
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+            }
+        });
+
         mSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,6 +242,9 @@ public class MainActivity extends AppCompatActivity {
                 if(msg.what==FAIL_ORDER){
                     Toast.makeText(MainActivity.this,"下单失败!",Toast.LENGTH_LONG).show();
                 }
+                if(msg.what==FAIL_SEARCH){
+                    Toast.makeText(MainActivity.this,"查询失败!",Toast.LENGTH_LONG).show();
+                }
                 return true;
             }
         });
@@ -209,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                URL    url = new URL(OrderOnlineAPI.COMPANY_CONTENT_URL + "?key=" + OrderOnlineAPI.APPKEY);
+                URL    url = new URL(ChangyongkuaidiAPi.COMPANY_TABLE_URL + "?key=" + ChangyongkuaidiAPi.APPKEY);
                     conn = (HttpURLConnection) url.openConnection();
                     InputStream is = conn.getInputStream();
                     StringBuffer sb = new StringBuffer();
@@ -221,15 +281,15 @@ public class MainActivity extends AppCompatActivity {
                     br.close();
                     is.close();
                     Gson g = new Gson();
-                    mCompanyList = g.fromJson( sb.toString(),CompanyList.class);
+                    mchangyongcom = g.fromJson( sb.toString(),ChangyongComList.class);
                     Log.i("AAAA", sb.toString());
-                    Log.i("AAAA", mCompanyList.getReason());
+                    Log.i("AAAA", mchangyongcom.getReason());
 
-                    if(mCompanyList.getReason().equals("查询成功")){
+                    if(mchangyongcom.getReason().equals("查询支持的快递公司成功")){
                         Log.i("AAAA","公司列表加载完成");
 
-                        for(int i = 0;i<mCompanyList.getResult().size();i++){
-                            mStrings.add(mCompanyList.getResult().get(i).getCarrier_name());
+                        for(int i = 0;i<mchangyongcom.getResult().size();i++){
+                            mStrings.add(mchangyongcom.getResult().get(i).getCom());
                         }
                     }
                     Message msg= new Message();
