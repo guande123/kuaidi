@@ -1,12 +1,13 @@
 package com.example.administrator.ad20170221downorderonline.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/2/22 0022.
  */
 
-public class KDHInfo {
+public class KDHInfo implements Serializable{
     /**
      * resultcode : 200
      * reason : 查询物流信息成功

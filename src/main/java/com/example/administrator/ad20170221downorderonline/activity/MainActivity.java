@@ -107,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
                         "&no="+kuaidihao+"&com="+mchangyongcom.getResult().get(position).getNo();
                 new Thread(new Runnable() {
 
-
                     @Override
                     public void run() {
                         URL url = null;
@@ -129,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
                         KDHInfo kdhInfo =  g.fromJson(sb.toString(), KDHInfo.class);
                             if(kdhInfo.getReason().equals("查询物流信息成功")){
                                    //返回物流信息
+                                Intent intent = new Intent(MainActivity.this,KDHInfoActivity.class);
+                                intent.putExtra("kdhinfo",kdhInfo);
+                                startActivity(intent);
                             }else{
                                 Message msg= new Message();
                                 msg.what = FAIL_SEARCH;
