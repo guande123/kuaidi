@@ -5,21 +5,14 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context="com.example.administrator.ad20170221downorderonline.MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="选择快递公司"/>
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/spinner"/>
+        android:text="选择快递公司:zjs"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -28,44 +21,44 @@
     android:layout_height="match_parent"
     android:layout_weight="1"
     android:orientation="vertical">
-    <EditText
-        android:id="@+id/sender_name"
+    <TextView
+        android:id="@+id/tsender_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint=" 发件人姓名 "
         android:textSize="12sp"/>
-    <EditText
-        android:id="@+id/sender_telphone"
+    <TextView
+        android:id="@+id/tsender_telphone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint=" 发件人手机号码 "
         android:textSize="12sp"/>
-    <EditText
-        android:id="@+id/sender_province_name"
+    <TextView
+        android:id="@+id/tsender_province_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint=" 发件地址省名称 "
         android:textSize="12sp"/>
-    <EditText
-        android:id="@+id/sender_city_name"
+    <TextView
+        android:id="@+id/tsender_city_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="  发件地址市名称  "
         android:textSize="12sp"/>
-    <EditText
-        android:id="@+id/sender_district_name"
+    <TextView
+        android:id="@+id/tsender_district_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint=" 发件地址区名称 "
         android:textSize="12sp"/>
-    <EditText
-        android:id="@+id/sender_address"
+    <TextView
+        android:id="@+id/tsender_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="  发件地址详细信息 "
         android:textSize="12sp"/>
-    <EditText
-        android:id="@+id/sender_post_code"
+    <TextView
+        android:id="@+id/tsender_post_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint=" 邮政编码 "
@@ -76,53 +69,49 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
-        <EditText
-            android:id="@+id/receiver_name"
+        <TextView
+            android:id="@+id/treceiver_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint=" 收件人姓名 "
             android:textSize="12sp"/>
-        <EditText
-            android:id="@+id/receiver_telphone"
+        <TextView
+            android:id="@+id/treceiver_telphone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint=" 收件人手机号码 "
             android:textSize="12sp"/>
-        <EditText
-            android:id="@+id/receiver_province_name"
+        <TextView
+            android:id="@+id/treceiver_province_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint=" 收件地址省名称 "
             android:textSize="12sp"/>
-        <EditText
-            android:id="@+id/receiver_city_name"
+        <TextView
+            android:id="@+id/treceiver_city_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="  收件地址市名称  "
             android:textSize="12sp"/>
-        <EditText
-            android:id="@+id/receiver_district_name"
+        <TextView
+            android:id="@+id/treceiver_district_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint=" 收件地址区名称 "
             android:textSize="12sp"/>
-        <EditText
-            android:id="@+id/receiver_address"
+        <TextView
+            android:id="@+id/treceiver_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="  收件地址详细信息 "
             android:textSize="12sp"/>
-        <EditText
-            android:id="@+id/receiver_post_code"
+        <TextView
+            android:id="@+id/treceiver_post_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint=" 收件邮政编码 "
             android:textSize="12sp"/>
     </LinearLayout>
     </LinearLayout>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/submit"
-        android:text="submit"/>
+
 </LinearLayout>
