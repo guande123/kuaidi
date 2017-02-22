@@ -1,4 +1,4 @@
-package com.example.administrator.ad20170221downorderonline;
+package com.example.administrator.ad20170221downorderonline.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.administrator.ad20170221downorderonline.R;
 import com.example.administrator.ad20170221downorderonline.entity.CompanyList;
 import com.example.administrator.ad20170221downorderonline.entity.OrderNetEntity;
 import com.example.administrator.ad20170221downorderonline.entity.ReceiverInfo;
@@ -28,6 +29,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -112,25 +114,28 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            URL url = new URL(OrderOnlineAPI.ORDER_ONLINE_URL+"?key="+OrderOnlineAPI.APPKEY+
-                            "&"+ OrderString.CARRIER_CODE+"=zjs"+
+                            //String urlstr2= OrderOnlineAPI.ORDER_ONLINE_URL+"?dtype=&send_method=addOrderInfoMes&order_no=546123487651&isWaybill=1&carrier_code=zjs&sender_name=%E9%94%82%E8%81%9A%E5%90%88&sender_telphone=13760790960&sender_phone=&sender_province_name=%E5%B9%BF%E4%B8%9C%E7%9C%81&sender_city_name=%E5%B9%BF%E5%B7%9E%E5%B8%82&sender_district_name=%E5%85%83%E5%B2%97%E5%8C%BA&sender_address=%E5%B9%BF%E4%B8%9C%E4%BA%A4%E9%80%9A%E8%81%8C%E4%B8%9A%E6%8A%80%E6%9C%AF%E5%AD%A6%E9%99%A2&sender_post_code=520134&receiver_name=%E9%83%91%E6%88%90%E5%8A%9F&receiver_telphone=13828243673&receiver_phone=&receiver_province_name=%E5%B9%BF%E4%B8%9C%E7%9C%81&receiver_city_name=%E5%B9%BF%E5%B7%9E%E5%B8%82&receiver_district_name=%E5%85%83%E5%B2%97%E5%8C%BA&receiver_address=%E5%B9%BF%E4%B8%9C%E4%BA%A4%E9%80%9A%E8%81%8C%E4%B8%9A%E6%8A%80%E6%9C%AF%E5%AD%A6%E9%99%A2&receiver_org_name=&receiver_post_code=520134&remark=&item_weight=&item_name=&item_spec=&send_start_time=&send_end_time=&key=dcd5d4b4fa1585ceb7fd279c4b45f641";
+                            String urlstr = OrderOnlineAPI.ORDER_ONLINE_URL+"?key="+OrderOnlineAPI.APPKEY+
+                                    "&"+ OrderString.CARRIER_CODE+"=zjs"+
                                     "&"+ OrderString.ISWAYBILL+"=1"+
                                     "&"+ OrderString.ORDER_NO+"=45623135487000"+
                                     "&"+ OrderString.SEND_METHOD+"=addOrderInfoMes"+
-                                    "&"+ OrderString.SENDER_NAME+"="+sName+
-                                    "&"+ OrderString.SENDER_PROVINCE+"="+sPro+
-                                    "&"+ OrderString.SENDER_CITY+"="+sCity+
-                                    "&"+ OrderString.SENDER_DISTRICT+"="+sDis+
-                                    "&"+ OrderString.SENDER_ADDRESS+"="+sAdd+
-                                    "&"+ OrderString.SENDER_POST_CODE+"="+sPost+
-                                    "&"+ OrderString.SENDER_TELPHONE+"="+sTel+
-                                    "&"+ OrderString.RECEIVER_NAME+"="+rName+
-                                    "&"+ OrderString.RECEIVER_PROVINCE+"="+rPro+
-                                    "&"+ OrderString.RECEIVER_CITY+"="+rCity+
-                                    "&"+ OrderString.RECEIVER_DISTRICT+"="+rDis+
-                                    "&"+ OrderString.RECEIVER_ADDRESS+"="+rAdd+
-                                    "&"+ OrderString.RECEIVER_POST_CODE+"="+rPost+
-                                    "&"+ OrderString.RECEIVER_TELPHONE+"="+rTel);
+                                    "&"+ OrderString.SENDER_NAME+"="+ URLEncoder.encode(sName,"UTF-8")+
+                                    "&"+ OrderString.SENDER_PROVINCE+"="+URLEncoder.encode(sPro,"UTF-8")+
+                                    "&"+ OrderString.SENDER_CITY+"="+URLEncoder.encode(sCity,"UTF-8")+
+                                    "&"+ OrderString.SENDER_DISTRICT+"="+URLEncoder.encode(sDis,"UTF-8")+
+                                    "&"+ OrderString.SENDER_ADDRESS+"="+URLEncoder.encode(sAdd,"UTF-8")+
+                                    "&"+ OrderString.SENDER_POST_CODE+"="+URLEncoder.encode(sPost,"UTF-8")+
+                                    "&"+ OrderString.SENDER_TELPHONE+"="+URLEncoder.encode(sTel,"UTF-8")+
+                                    "&"+ OrderString.RECEIVER_NAME+"="+URLEncoder.encode(rName,"UTF-8")+
+                                    "&"+ OrderString.RECEIVER_PROVINCE+"="+URLEncoder.encode(rPro,"UTF-8")+
+                                    "&"+ OrderString.RECEIVER_CITY+"="+URLEncoder.encode(rCity,"UTF-8")+
+                                    "&"+ OrderString.RECEIVER_DISTRICT+"="+URLEncoder.encode(rDis,"UTF-8")+
+                                    "&"+ OrderString.RECEIVER_ADDRESS+"="+URLEncoder.encode(rAdd,"UTF-8")+
+                                    "&"+ OrderString.RECEIVER_POST_CODE+"="+URLEncoder.encode(rPost,"UTF-8")+
+                                    "&"+ OrderString.RECEIVER_TELPHONE+"="+URLEncoder.encode(rTel,"UTF-8");
+                            URL url = new URL(urlstr);
+                            Log.i("AAAA", urlstr);
                            conn = (HttpURLConnection) url.openConnection();
                             InputStream is = conn.getInputStream();
                             StringBuffer sb = new StringBuffer();
@@ -143,7 +148,8 @@ public class MainActivity extends AppCompatActivity {
                             is.close();
                             Gson g = new Gson();
                             OrderNetEntity orderEntity =  g.fromJson(sb.toString(), OrderNetEntity.class);
-                           if (orderEntity.getReason().equals("下单成功")){
+                            Log.i("AAAA", sb.toString());
+                           if (orderEntity.getReason().equals("下单成功")||orderEntity.getReason().equals("订单号已存在")){
                                startActivityToShowInfo(sInfo,rInfo);
                            }else{
                                Message msg= new Message();

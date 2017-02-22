@@ -1,13 +1,15 @@
-package com.example.administrator.ad20170221downorderonline;
+package com.example.administrator.ad20170221downorderonline.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.administrator.ad20170221downorderonline.R;
 import com.example.administrator.ad20170221downorderonline.entity.OrderNetEntity;
 import com.example.administrator.ad20170221downorderonline.entity.ReceiverInfo;
 import com.example.administrator.ad20170221downorderonline.entity.SenderInfo;
@@ -22,6 +24,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * Created by Administrator on 2017/2/22 0022.
@@ -101,9 +104,11 @@ public class ShowInfoActivity  extends AppCompatActivity{
                             @Override
                             public void run() {
                                 try {
-                                    URL url = new URL(OrderOnlineAPI.CANCEL_ORDER_URL+"?key="+OrderOnlineAPI.APPKEY+
+                                    String urlStr = OrderOnlineAPI.CANCEL_ORDER_URL+"?key="+OrderOnlineAPI.APPKEY+
                                             "&"+ OrderString.ORDER_NO+"="+"45623135487000"+
-                                            "&"+ OrderString.CARRIER_CODE+"=zjs");
+                                            "&"+ OrderString.CARRIER_CODE+"="+ URLEncoder.encode("zjs","UTF-8");
+                                    URL url = new URL(urlStr);
+                                    Log.i("AAAA",urlStr);
                                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                                     InputStream is = conn.getInputStream();
                                     StringBuffer sb = new StringBuffer();
@@ -116,7 +121,8 @@ public class ShowInfoActivity  extends AppCompatActivity{
                                     is.close();
                                     Gson g = new Gson();
                                     OrderNetEntity orderEntity =  g.fromJson(sb.toString(), OrderNetEntity.class);
-                                    if (orderEntity.getReason().equals("取消成功")){
+                                    Log.i("AAAA",sb.toString());
+                                    if (orderEntity.getReason().equals("取消成功")||orderEntity.getReason().equals("订单状态不属于下单成功和撤单失败,无法继续进行撤销")){
                                         finish();
                                     }
                                 } catch (MalformedURLException e) {

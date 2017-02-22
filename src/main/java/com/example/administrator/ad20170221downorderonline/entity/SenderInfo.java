@@ -7,6 +7,13 @@ import java.io.Serializable;
  */
 
 public class SenderInfo implements Serializable{
+    private String mSenderName;
+    private String mSenderPro;
+    private String mSenderCity;
+    private String mSenderAdd;
+    private String mSenderPost;
+    private String mSenderTel;
+    private String mSenderDis;
     public SenderInfo(){}
     public SenderInfo(String mSenderName,
            String mSenderPro, String mSenderCity,String mSenderDis, String mSenderAdd, String mSenderPost,String mSenderTel){
@@ -16,6 +23,8 @@ public class SenderInfo implements Serializable{
         this.mSenderAdd = mSenderAdd;
         this.mSenderTel = mSenderTel;
         this.mSenderDis = mSenderDis;
+        this.mSenderPost =mSenderPost;
+
     }
     public String getSenderName() {
         return mSenderName;
@@ -65,12 +74,7 @@ public class SenderInfo implements Serializable{
         mSenderTel = senderTel;
     }
 
-    private String mSenderName;
-    private String mSenderPro;
-    private String mSenderCity;
-    private String mSenderAdd;
-    private String mSenderPost;
-    private String mSenderTel;
+
 
     public String getSenderDis() {
         return mSenderDis;
@@ -80,6 +84,6 @@ public class SenderInfo implements Serializable{
         mSenderDis = senderDis;
     }
 
-    private String mSenderDis;
+
 
 }

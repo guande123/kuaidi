@@ -17,6 +17,7 @@ public class ReceiverInfo implements Serializable{
         this.mReceiverCity=mReceiverCity;
         this.mReceiverAdd = mReceiverAdd;
         this.mReceiverTel = mReceiverTel;
+        this.mReceiverPost =mReceiverPost;
         this.mReceiverDis = mReceiverDis;
     }
 
@@ -25,6 +26,9 @@ public class ReceiverInfo implements Serializable{
     private String mReceiverPro;
     private String mReceiverCity;
     private String mReceiverAdd;
+    private String mReceiverDis;
+    private String mReceiverPost;
+    private String mReceiverTel;
 
     public String getReceiverDis() {
         return mReceiverDis;
@@ -34,9 +38,7 @@ public class ReceiverInfo implements Serializable{
         mReceiverDis = receiverDis;
     }
 
-    private String mReceiverDis;
-    private String mReceiverPost;
-    private String mReceiverTel;
+
 
     public String getReceiverTel() {
         return mReceiverTel;
